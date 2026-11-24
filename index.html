@@ -2314,6 +2314,9 @@ body.jp67k #chip22{display:none!important}
 #stage .d-top .livebug{height:38px;box-sizing:border-box}
 /* v70 · ortak geri sayım başlığı koyu ışık şovunda okunur */
 #stage #ov-ls .k1{color:#fec6a2!important;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+/* v70 · kutulu açılışta (4 kutu) arkadaki 2027 duvarı sönükleşir, kutular öne çıkar */
+#ptc{transition:opacity .6s ease}
+#draw:has(#digits.jp.on) #ptc{opacity:.62}  /* #wall zaten .4: toplam ≈ .25 */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet"></head>
 <body>

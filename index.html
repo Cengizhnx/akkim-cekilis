@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1f1d21">
-<title>Akkim · Yeni Yıl Büyük Çekilişi 2027</title>
+<title>Akkim · Yeni Yıl Çekilişi 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -2314,6 +2314,7 @@ body.jp67k #chip22{display:none!important}
 #stage .d-top .livebug{height:38px;box-sizing:border-box}
 /* v70 · ortak geri sayım başlığı koyu ışık şovunda okunur */
 #stage #ov-ls .k1{color:#fec6a2!important;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+#stage #ov-ls.fin .k1{color:#62226c!important;text-shadow:none}
 /* v70 · kutulu açılışta (4 kutu) arkadaki 2027 duvarı sönükleşir, kutular öne çıkar */
 #ptc{transition:opacity .6s ease}
 #draw:has(#digits.jp.on) #ptc{opacity:.62}  /* #wall zaten .4: toplam ≈ .25 */
@@ -2436,7 +2437,7 @@ body.jp67k #chip22{display:none!important}
     <div class="certpaper">
       <div>
         <div class="ct-k">DOĞRULAMA SERTİFİKASI</div>
-        <div class="ct-t">Akkim Yeni Yıl Büyük Çekilişi <span class="yr"></span></div>
+        <div class="ct-t">Akkim Yeni Yıl Çekilişi <span class="yr"></span></div>
         <div class="ct-s">Bu çekiliş, yayından önce kilitlenen katılımcı listesi ve canlı yayında iki şehirden alınan şans sayılarıyla, kamuya açık bir algoritma kullanılarak yapılmıştır. Aşağıdaki bilgilerle çekiliş herkes tarafından yeniden çalıştırılabilir ve aynı sonuç elde edilir.</div>
         <div class="ct-tbl" id="ct-tbl"></div>
         <div class="ct-sig"><div>İnsan Kaynakları</div><div>Yönetim Temsilcisi</div><div>Bağımsız Gözlemci / Noter</div></div>
@@ -2490,7 +2491,7 @@ body.jp67k #chip22{display:none!important}
   <div class="tp-gar" id="tp-gar"></div>
 
   <section class="tps" id="tp-join">
-    <div class="tp-k">YENİ YIL BÜYÜK ÇEKİLİŞİ <span class="yr">2027</span></div>
+    <div class="tp-k">YENİ YIL ÇEKİLİŞİ <span class="yr">2027</span></div>
     <h1>950 kutudan<br><em>biri senin.</em></h1>
     <p>Sicil numaranı ve katılım kodunu yaz; kutun sahnedeki duvarda yansın.</p>
     <div class="pgw sm" id="pg-join"></div>
@@ -2667,7 +2668,7 @@ const S={list:[],src:'demo',listHash:'',seed:'',seal:'',rng:null,pool:[],steps:[
 function buildSteps(){ const st=[]; let act=-1;
   PRIZES.forEach((p,pi)=>{ if(p.act!==act){act=p.act; st.push({t:'act',act});} st.push({t:'intro',pi});
     let d=0; const b=p.mode==='batch'?p.batch:1; while(d<p.qty){ const n=Math.min(b,p.qty-d); st.push({t:'draw',pi,n,from:d}); d+=n; } });
-  st.push({t:'final'}); st.push({t:'ak'}); return st; }
+  st.push({t:'final'}); st.push({t:'ls'}); st.push({t:'ak'}); return st; }
 function setList(L,src){ S.list=L; S.src=src; S.listHash=sha256(L.map(x=>x.id+'|'+x.name+'|'+x.city).join('\n')); }
 function seedText(ny,nn){ return `AKKIM-${CONFIG.year}|YALOVA:${(ny||'0').trim()}|NAZILLI:${(nn||'0').trim()}`; }
 function freshState(seed){ S.seed=seed; S.seal=sha256(S.listHash+'#'+seed); S.rng=rngFrom(S.seal); S.pool=S.list.map((_,i)=>i); S.steps=buildSteps(); S.si=0; S.results=[]; S.voids=[]; S.log=[]; }
@@ -2773,7 +2774,7 @@ function buildDeck(){
      <div class="rv" style="--d:0">${logoSVG(62)}</div>
      <div class="eyebrow rv" style="--d:1;margin-top:56px">Yalova · Nazilli · Tek Sahne</div>
      <div class="cover-year rv" style="--d:2"><span class="gd">${String(CONFIG.year).slice(0,3)}</span><span class="flipd"><b class="o gd">${String(CONFIG.year-1).slice(3)}</b><b class="n gd">${String(CONFIG.year).slice(3)}</b></span></div>
-     <div class="cover-t rv" style="--d:3">Yeni Yıl <em class="gold">Büyük Çekilişi</em></div>
+     <div class="cover-t rv" style="--d:3">Yeni Yıl <em class="gold">Çekilişi</em></div>
      <div class="cover-sub rv" style="--d:4"><span class="chip"><span class="dot bg-y"></span>Yalova 600</span><span class="chip"><span class="dot bg-n"></span>Nazilli 350</span><span>950 çalışan · 950 hediye · tek canlı yayın</span></div></div>
    <div class="cover-r"><div class="halo"></div><div class="ring" style="width:700px;height:700px;margin:-350px 0 0 -350px"></div><div class="ring" style="width:860px;height:860px;margin:-430px 0 0 -430px;border-style:dashed;opacity:.5"></div>
      <div class="orb art" style="left:300px;top:240px;width:300px;height:470px;animation-delay:-1s">${art(P('i18m'))}</div>
@@ -2793,7 +2794,7 @@ function buildDeck(){
          <div class="small" style="text-align:center;font-size:16px">Yalova ana yayın stüdyosu, Nazilli canlı ve çift yönlü bağlı salon. Kazananın sevinci diğer şehrin ekranına düşer.</div>
        </div>
        <div class="kun-r">
-         <div class="kr rv" style="--d:2"><span>Etkinlik</span><div><b>Akkim Yeni Yıl Büyük Çekilişi ${CONFIG.year}</b> · iki salonlu, canlı yayınlı kurum içi etkinlik</div></div>
+         <div class="kr rv" style="--d:2"><span>Etkinlik</span><div><b>Akkim Yeni Yıl Çekilişi ${CONFIG.year}</b> · iki salonlu, canlı yayınlı kurum içi etkinlik</div></div>
          <div class="kr rv" style="--d:2.5"><span>Önerilen zaman</span><div>Aralık 2026'nın son haftası · vardiya çıkışına denk gelecek şekilde ≈ ${Math.round(total/5)*5} dakika</div></div>
          <div class="kr rv" style="--d:3"><span>Mekân</span><div><b class="city-y">Yalova</b> ana stüdyo + salon · <b class="city-n">Nazilli</b> bağlı salon · uzaktakiler <b>Teams Town Hall</b></div></div>
          <div class="kr rv" style="--d:3.5"><span>Katılımcı</span><div>İK listesindeki <b>950 aktif çalışan</b> otomatik katılır, başvuru gerekmez</div></div>
@@ -3004,6 +3005,7 @@ async function next(){
     else if(st.t==='intro'){ hideOverlays(); hideStageLayers(); zoomOut(); const p=PRIZES[st.pi]; setPrize(st.pi); $('#oi-img').innerHTML=art(p); $('#oi-name').textContent=p.name; const gf=$('#gift'); gf.style.setProperty('--box',BOX[p.act]); gf.classList.remove('shake','open'); void gf.offsetWidth; $('#oi-q').textContent=p.qty; $('#oi-qt').textContent=p.qty>1?'talihli kazanacak':'talihli kazanacak'; $('#oi-mode').textContent=MODE_TR[p.mode]; $('#ov-intro').classList.add('on'); SND.play('xbell',.4); setTimeout(()=>{ gf.classList.add('shake'); SND.play('tick2',.6); },380*K()); setTimeout(()=>{ gf.classList.add('open'); SND.play('xreveal',.85); SND.play('glitter',.5); FX.burst(110,.5,.42,.75,true); },1000*K()); setReady(p.name,'SIRADAKİ ÇEKİLİŞ'); }
     else if(st.t==='draw'){ hideOverlays(); const p=PRIZES[st.pi]; await animateDraw(p,recs,st); S.results.push(...recs); afterDraw(p,recs); }
     else if(st.t==='final'){ hideOverlays(); hideStageLayers(); await finale(); }
+    else if(st.t==='ls'){ hideOverlays(); hideStageLayers(); FX.ps=[]; await lightShow(); }
     else if(st.t==='done'){ hideOverlays(); go('results'); }
   } finally { busy=false; broadcast(); if(AUTO && SCREEN==='draw') scheduleAuto(); }
 }
@@ -3252,7 +3254,7 @@ const NET={ room:null, seen:new Map(), stageOn:false,
       const tt=+pr.taps||0; if(tt>o.taps){ onMsg({t:'tap',s,n:Math.min(60,tt-o.taps)}); o.taps=tt; } } } };
 function phaseX(){ if(!S.started||SCREEN==='deck'||SCREEN==='setup') return 'lobby';
   const done=S.steps[S.si-1], up=S.steps[S.si];
-  if(done&&done.t==='ak') return 'ak'; if(done&&done.t==='final') return 'final';
+  if(done&&done.t==='ak') return 'ak'; if(done&&(done.t==='final'||done.t==='ls')) return 'final';
   if(busy) return done&&done.t==='draw'?'draw':'wait';
   if(Date.now()<L.resUntil) return 'res';
   if(up&&up.t==='draw') return 'tap'; if(done&&done.t==='act') return 'act'; return 'wait'; }
@@ -3347,7 +3349,7 @@ wallRun=function(targets,dur){ return new Promise(res=>{ dur*=K(); const T0=perf
 buildDeck=function(){ const yT=S.list.filter(x=>x.city==='Y').length, nT=S.list.length-yT;
   $('#deck').innerHTML=`<div class="slide" id="s-lobby"><div class="lb-grid"><div>
     <div class="lb-k rv">YALOVA · NAZİLLİ · TEK SAHNE</div><div class="lb-year gold rv" style="--d:1">${CONFIG.year}</div>
-    <div class="lb-t rv" style="--d:2">Yeni Yıl <em class="gold">Büyük Çekilişi</em></div>
+    <div class="lb-t rv" style="--d:2">Yeni Yıl <em class="gold">Çekilişi</em></div>
     <div class="lb-c rv" style="--d:3"><div class="lb-n"><b id="lb-n">0</b><small>/ ${fmt(S.list.length)} KİŞİ KATILDI</small></div>
       <div class="lb-bars"><div class="r city-y"><span>● Yalova</span><div class="bar"><i id="lb-y" style="background:#fc6f16"></i></div><span id="lb-yv">0/${yT}</span></div><div class="r city-n"><span>● Nazilli</span><div class="bar"><i id="lb-nb" style="background:#b52670"></i></div><span id="lb-nv">0/${nT}</span></div></div></div>
     <div class="lb-chips" id="lb-chips"></div></div>
@@ -3602,7 +3604,7 @@ function nightReport(){ const now=new Date(), R=S.results.filter(r=>!r.void), ci
   table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{border-bottom:1px solid #f5dac8;padding:6px 8px;text-align:left}th{background:#f9e8dd;font-size:11px;letter-spacing:.08em;text-transform:uppercase}td.m{font-family:monospace}td.c{text-align:center}.w{color:#b52f74;font-weight:700}
   .cmp td,.cmp th{text-align:center;font-size:14px}.cmp td:first-child{text-align:left;font-weight:700}ul{margin:0;padding-left:18px;font-size:13px;line-height:1.6}.seal{font-family:monospace;font-size:11px;color:#706a76;word-break:break-all;margin-top:30px;border-top:1px solid #eee;padding-top:12px}
   @media print{body{padding:16px}}</style></head><body><img src="${LOGO_RENKLI}" alt="Akkim" width="139" height="50" style="display:block;margin-bottom:14px">
-  <div class="top"><div><small>AKKİM · YALOVA ⟷ NAZİLLİ</small><h1>Yeni Yıl Büyük Çekilişi ${CONFIG.year} · Gece Raporu</h1></div><small>${now.toLocaleDateString('tr-TR')} · ${now.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</small></div>
+  <div class="top"><div><small>AKKİM · YALOVA ⟷ NAZİLLİ</small><h1>Yeni Yıl Çekilişi ${CONFIG.year} · Gece Raporu</h1></div><small>${now.toLocaleDateString('tr-TR')} · ${now.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</small></div>
   <h2>Özet</h2><div class="kp">${kpi(fmt(S.list.length),'Davetli çalışan',`Yalova ${C.Y.inv} · Nazilli ${C.N.inv}`)}${kpi(fmt(T('joined')),'Telefonla katılan',pct(T('joined'),S.list.length)+' katılım')}${kpi(R.length+' / '+TOTAL_SPECIAL,'Özel hediye çekildi',`mükerrer kazanan: ${integrity().dup}`)}${kpi(fmt(T('dlv')),'Teslim edilen',pct(T('dlv'),R.length)+' · bekleyen '+(R.length-T('dlv')))}
   ${kpi(fmt(T('here')),'“Buradayım” diyen kazanan',pct(T('here'),R.length))}${kpi(fmt(T('wal')),'iWallet hediye çeki',CONFIG.giftCardValue+' / kişi')}${kpi(fmt(T('rx')),'Canlı tepki (emoji)',`Yalova ${C.Y.rx} · Nazilli ${C.N.rx}`)}${kpi(S.voids.length,'Geçersiz sayılan çekiliş','kayıt altında')}</div>
   <h2>Yalova ve Nazilli karşılaştırması</h2><table class="cmp"><tr><th></th><th>Davetli</th><th>Telefonla katılan</th><th>Katılım</th><th>Özel hediye</th><th>Buradayım</th><th>Teslim</th><th>iWallet</th><th>Tepki</th></tr>
@@ -3712,7 +3714,7 @@ function bestGuesser(){ const el=$('#ak-best'); if(!el) return; const t=topGuess
 
 /* ---------------- sahne: ışık şovu (finalden hemen önce) ---------------- */
 const __fin20=finale;
-finale=async function(){ FX.ps=[]; const r=await __fin20(); await wait(6000); FX.ps=[]; await lightShow(); return r; };
+finale=async function(){ FX.ps=[]; return __fin20(); };
 function lightShow(){ return new Promise(res=>{ const ov=$('#ov-ls'), n=$('#ls-n'), cap=$('#ls-c'); hideOverlays(); hideStageLayers();
   L.lsUntil=Date.now()+LS_T; pushX(); setTimeout(pushX,250); setTimeout(pushX,700); ov.className='ovl on'; SND.duck(true); SND.play('riser',.6);
   const t0=performance.now(); let lastS=-1, lastB=-1;
@@ -4370,7 +4372,7 @@ buildDeck=function(){ __bd31(); const deck=$('#deck'); if(!deck||$('#s-cover31')
      <div class="c31-logo">${logoSVG(62)}</div>
      <div class="c31-k">YALOVA · NAZİLLİ · TEK SAHNE</div>
      <div class="c31-y"><span>2027</span></div>
-     <div class="c31-t">Yeni Yıl <em class="gold">Büyük Çekilişi</em></div>
+     <div class="c31-t">Yeni Yıl <em class="gold">Çekilişi</em></div>
      <div class="c31-s"><span class="chip"><i style="background:#fc6f16"></i>Yalova 600</span><span class="chip"><i style="background:#b52670"></i>Nazilli 350</span><span>950 çalışan · 200 özel hediye · tek canlı yayın</span></div></div>
    <div class="c31-r"><div class="c31-wm">2027</div><div class="c31-halo"></div><div class="c31-ring"></div><div class="c31-ring b"></div>
      ${orb('i18m',300,190,320,520,-1)}${orb('cmh',70,170,240,240,-3)}${orb('awr',650,150,200,280,-2)}${orb('ps5',110,600,250,250,-4)}${orb('aw',640,560,240,240,-5)}${orb('g1',400,760,170,220,-2.5)}${orb('cyr',40,420,150,170,-1.6)}${orb('ipd',720,380,190,190,-3.6)}</div>
@@ -5448,7 +5450,7 @@ function hediyeUygula46(rows,qtyToo){ const m=new Map((rows||[]).map(r=>[r.hid,r
 buildSteps=function(){ const st=[]; let act=-1;
   PRIZES.forEach((p,pi)=>{ if(!(p.qty>0)) return; if(p.act!==act){act=p.act; st.push({t:'act',act});} st.push({t:'intro',pi});
     let d=0; const b=p.mode==='batch'?p.batch:1; while(d<p.qty){ const n=Math.min(b,p.qty-d); st.push({t:'draw',pi,n,from:d}); d+=n; } });
-  st.push({t:'final'}); st.push({t:'ak'}); return st; };
+  st.push({t:'final'}); st.push({t:'ls'}); st.push({t:'ak'}); return st; };
 const __shz46=sahneHazir43;
 sahneHazir43=async function(sb){ const ok=await __shz46(sb); if(!ok) return ok;
   try{ const { data }=await sb.from('hediye_ayar').select('*'); hediyeUygula46(data,!S.started); }catch(e){}
@@ -5868,7 +5870,7 @@ function adimlar50(){ const st=S.started?S.steps:buildSteps(), top=new Map(), si
     if(x.t==='intro') return 'Sıradaki hediye: '+p.name;
     if(x.t==='draw'){ const ad=ACTS[p.act].name+' — '+p.name; if(x.redo) return ad+' · yeniden çekiliş';
       const i=(sira.get(x.pi)||0)+1; sira.set(x.pi,i); return top.get(x.pi)>1?`${ad} ${i}/${top.get(x.pi)}`:ad; }
-    return {final:'Hediye çeki finali',ak:'Akkim 50. yıl',done:'Sonuçlar'}[x.t]||x.t; })); }
+    return {final:'Hediye çeki finali',ls:'Ortak geri sayım',ak:'Akkim 50. yıl',done:'Sonuçlar'}[x.t]||x.t; })); }
 const ozet50=s=>{ let h=5381; for(let i=0;i<s.length;i++) h=((h*33)^s.charCodeAt(i))>>>0; return h.toString(36); };
 
 /* ---------- sahne tarafı ---------- */
@@ -5928,6 +5930,7 @@ const KOM={ n:0, w:null, r:null, gizli:'', okundu:0, gorulen:new Set(), liste:[]
       const C=R.map(r=>{ const q=S.list[r.ix]; return `<div class="g-c${tek?' tek':''}"><b>${esc43(shortName(q.name))}</b><span>#${esc43(q.id)}</span> ${cityBadge(q.city)}</div>`; }).join('');
       return `<div class="g-u">KAZANANLAR</div><div class="g-s">${esc43(p.name)}</div><div class="g-grid" style="grid-template-columns:repeat(${R.length<=5?Math.max(1,R.length):Math.ceil(R.length/2)},auto)">${C}</div>`; }
     if(x.t==='final') return T('VE HERKES KAZANDI',fmt(S.pool.length)+' hediye çeki',esc43(CONFIG.giftCardName+' · '+CONFIG.giftCardValue));
+    if(x.t==='ls') return T('IŞIK ŞOVU','Ortak geri sayım','Telefonlar havaya · 10’dan geriye');
     if(x.t==='ak') return T('YIL · 1977 — 2027','Akkim 50. yıl','Mutlu Yıllar!');
     return T('ÇEKİLİŞ TAMAMLANDI','Sonuçlar'); },
   yolla(){ if(NET.role!=='stage'||NET.status!=='ok') return; this.son=this.imge(); try{ pushX(); }catch(e){} },
@@ -6170,6 +6173,7 @@ Object.assign(KOM,{ test:false, dur:false, elle:false, koru:false, geziyor:false
     else if(x.t==='final'){ hideStageLayers(); const R=S.pool.slice(0,750);
       $('#of-wall').innerHTML=R.map(ix=>`<i class="${S.list[ix].city==='N'?'n':'y'}"></i>`).join('');
       $('#of-val').textContent=CONFIG.giftCardValue; $('#of-n').textContent=fmt(S.pool.length); $('#ov-final').classList.add('on'); }
+    else if(x.t==='ls'){ hideStageLayers(); $('#ov-ls').className='ovl on fin'; $('#ls-n').textContent=CONFIG.year; $('#ls-c').textContent='Yalova ve Nazilli birlikte'; }
     else if(x.t==='ak'){ hideStageLayers(); $('#ov-50').classList.add('on'); bestGuesser(); }
     else if(x.t==='done') go('results');
   }

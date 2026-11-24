@@ -1,0 +1,8 @@
+# Akkim Yeni Yıl Çekilişi 2027 · Netlify
+# Ekranlar tek sayfadan açılır; adres çubuğundaki yol korunur (sayfa hangi ekran olduğunu yoldan okur).
+# Netlify sondaki eğik çizgiyi yok sayar: /sahne/ da aynı kurala düşer, uygulama ikisini de tanır.
+/admin      /index.html   200
+/masa       /index.html   200
+/sahne      /index.html   200
+/kumanda    /index.html   200
+/telefon    /index.html   200

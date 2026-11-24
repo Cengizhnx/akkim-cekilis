@@ -6555,7 +6555,7 @@ const JP64={ cur:null, dep:new Map(), depAt:0, tah:{pi:-1,Y:0,N:0},
   kartlar(p,w,no,acik){ const row=$('#jp-row'); if(!row) return; const son=p.mode==='grand';
     row.innerHTML=this.ADIM.map((a,i)=>`<div class="jc${i===3?' fin':''}${acik?' open':''}" data-i="${i}"><div class="in">
       <div class="fr"><div class="rb v"></div><div class="rb h"></div><div class="bow"><i></i><i></i><b></b></div>
-        <span class="no">${i+1}</span><span class="lb">${a[0]}${i===3?' ★':''}</span><span class="ft">${i===3?(son?'BÜYÜK FİNAL':'TEK TEK'):'AKKİM 2027'}</span></div>
+        <span class="no">${i+1}</span><span class="lb">${a[0]}${i===3?' ★':''}</span>${i===3&&son?'<span class="ft">BÜYÜK FİNAL</span>':''}</div>
       <div class="bk">${this.yuz(i,w)}</div></div></div>`).join('');
     $('#jp-t').innerHTML=`${this.esc(p.name)} <em>· ${no}/${p.qty}</em>`;
     $('#jp-k').textContent=son?'BÜYÜK FİNAL · TEK KAZANAN':'YENİ YIL HEDİYESİ YOLDA'; },

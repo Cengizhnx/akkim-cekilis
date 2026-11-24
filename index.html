@@ -2327,6 +2327,8 @@ body.jp67k #chip22{display:none!important}
 #stage #ov-grand .gn{line-height:1.12;padding:0 .06em .12em 0;margin:10px 0 10px}
 /* v70 · sahne efekt tuvali yalnızca sahnede (telefonda iPhone sol üstte koyu kutu çiziyordu) */
 #fx:not([data-on]){display:none!important}
+/* v70 · tahmin oyunu kaldırıldı: kalan izler görünmesin */
+#poll20,#jp-tah,.jp-tah,#vote20,.vres,#ak-best{display:none!important}
 /* v70 · kapak başlığı tek satır: "Yeni Yıl Çekilişi" */
 #s-cover31 .c31-t{white-space:nowrap}
 #s-cover31 .c31-t em{display:inline;font-style:normal}
@@ -2909,7 +2911,7 @@ function buildDeck(){
        <div class="fc glass rv" style="--d:5"><div class="tag">CANLI</div><div class="em">🎥</div><h4>Sevinç Kamerası</h4><p>Kazanan kameraya gelir, iki şehir birlikte alkışlar. Nazilli'deki sevinç Yalova'nın dev ekranına düşer.</p></div>
        <div class="fc glass rv" style="--d:6"><div class="tag">ARA</div><div class="em">⚡</div><h4>Altın Dakika</h4><p>Tur arasında 60 saniyelik şirket kültürü yarışması (Teams anketi / Slido). Kazanan şehre bonus hediye.</p></div>
        <div class="fc glass rv" style="--d:7"><div class="tag">TELEFONDA</div><div class="em">📱</div><h4>Dijital Kazı-Kazan</h4><p>Herkes sicil numarasıyla hediyesini telefonundan kazıyarak açar, kazanan kartını indirip paylaşır.</p></div>
-       <div class="fc glass rv" style="--d:8"><div class="tag">TAHMİN</div><div class="em">🔮</div><h4>iPhone Hangi Şehre?</h4><p>Yayın başında anket: büyük ödül hangi şehre gidecek? Doğru tahmin edenlere sürpriz.</p></div>
+       
        <div class="fc glass rv" style="--d:9"><div class="tag">ATMOSFER</div><div class="em">✨</div><h4>${CONFIG.year} Dilek Duvarı</h4><p>QR ile gönderilen yeni yıl dilekleri tur aralarında ekranda akar; DJ, jingle ve ışık geçişleri.</p></div></div></div>`,
   `<div class="slide">${baubles([[260,140,'#8a3d93',54],[380,240,'#b52670',42],[1540,200,'#fc6f16',46],[1660,120,'#e33b92',56]])}<div class="cta"><div class="rv">${logoSVG(68)}</div><div class="eyebrow rv" style="--d:1;margin-top:46px">Şimdi canlı deneyelim</div><div class="s-title rv" style="--d:2;margin-top:16px">Çekiliş <em class="gold">başlasın</em></div>
      <div class="s-lead rv" style="--d:3;text-align:center">950 kişilik örnek listeyle tam çekiliş baştan sona oynar. <span class="kbd">H</span> prova hızı · <span class="kbd">A</span> otomatik akış · <span class="kbd">P</span> sunucu paneli</div>
@@ -3702,11 +3704,9 @@ function pollTally(k){ let y=0,n=0; L.votes.forEach(o=>{ if(o.k===k){ o.v==='Y'?
 const __st20=stateX;
 stateX=function(){ const st=__st20();
   if(st.ph==='ls'){ st.left=Math.max(0,L.lsUntil-Date.now()); st.tot=LS_T; }
-  if((st.ph==='tap'||st.ph==='draw')&&isSingle(st.pi)){ const k=st.ph==='tap'?S.si:S.si-1; const t=pollTally(k); st.poll=1; st.vk=k; st.py=t.y; st.pn=t.n; st.lock=st.ph==='draw'?1:0; }
-  if(st.ph==='res'&&isSingle(st.pi)){ st.vk=L.lastVk; st.wc=L.lastW.map(id=>(S.list.find(x=>x.id===id)||{}).city); }
   return st; };
 const __onMsg20=onMsg;
-onMsg=function(m){ if(m&&m.t==='vote'){ const s=String(m.s||''); if(phaseX()!=='tap'||!isSingle(curPi())||+m.k!==S.si) return; if(!S.list.some(x=>x.id===s)) return; if(m.v!=='Y'&&m.v!=='N') return; L.votes.set(s,{k:S.si,v:m.v}); L.voters.add(s); pollRender(); return; }
+onMsg=function(m){ if(m&&m.t==='vote') return; if(m&&m.t==='vote'){ const s=String(m.s||''); if(phaseX()!=='tap'||!isSingle(curPi())||+m.k!==S.si) return; if(!S.list.some(x=>x.id===s)) return; if(m.v!=='Y'&&m.v!=='N') return; L.votes.set(s,{k:S.si,v:m.v}); L.voters.add(s); pollRender(); return; }
   return __onMsg20(m); };
 const __peers20=NET.peers.bind(NET);
 NET.peers=function(ch){ __peers20(ch); for(const p of ch.joined.concat(ch.updated)){ if(p.sameTab) continue; const pr=p.presence||{}; const o=this.seen.get(p.peer)||{};
@@ -3747,17 +3747,15 @@ function exportInvites(){ const rows=[['sicil','ad_soyad','sehir','katilim_kodu'
 
 /* rapora tahmin tablosu */
 const __rep20=nightReport;
-nightReport=function(){ const orig=download; const top=topGuessers(5);
+nightReport=function(){ return __rep20(); const orig=download; const top=topGuessers(5);
   window.download=async(name,html,type)=>{ window.download=orig; const extra=`<h2>Tahmin oyunu · en iyi tahminciler</h2><ul>${top.map((x,i)=>`<li><b>${i+1}. ${esc(x.p.name)}</b> · ${x.p.id} · ${CONFIG.cities[x.p.city].name} — ${x.v} doğru</li>`).join('')||'<li>Tahmin yapılmadı.</li>'}</ul>`;
     return orig(name,String(html).replace('<h2>Teslim bekleyenler</h2>',extra+'<h2>Teslim bekleyenler</h2>'),type); };
   return __rep20(); };
 
-function stageInit20(){ $('#draw').insertAdjacentHTML('beforeend',`<div id="poll20"><div class="pk">TAHMİN · BU HEDİYE HANGİ ŞEHRE?</div><div class="pr"><span class="city-y">Yalova <b class="pyv">—</b></span><div class="pb"><i class="py"></i></div><span class="city-n"><b class="pnv">—</b> Nazilli</span></div><div class="pt"></div></div>
+function stageInit20(){ $('#draw').insertAdjacentHTML('beforeend',`
     <div class="ovl" id="ov-ls"><div class="lsbg"></div><div class="k1">ORTAK GERİ SAYIM · 2027</div><div class="lsn" id="ls-n">10</div><div class="lsc" id="ls-c"></div></div>`);
-  const ms=$('#ov-50 .ms'); if(ms) ms.insertAdjacentHTML('afterend','<div class="ak-best" id="ak-best"></div>');
   const rn=$('#r-night'); if(rn) rn.insertAdjacentHTML('afterend','<button class="btn ghost" id="r-inv">Davet linkleri (İK · CSV)</button>'); const ri=$('#r-inv'); if(ri) ri.onclick=exportInvites;
   document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return; if(e.key==='i'||e.key==='I') exportInvites(); },true);
-  setInterval(pollRender,300);
   setInterval(()=>{ if(!L.sim||phaseX()!=='tap'||!isSingle(curPi())) return; const arr=[...L.lit]; for(let j=0;j<6;j++){ const p=S.list[arr[(Math.random()*arr.length)|0]]; if(p&&!L.votes.has(p.id)||p&&L.votes.get(p.id).k!==S.si) L.votes.set(p.id,{k:S.si,v:Math.random()<.57?'Y':'N'}); } },250); }
 
 /* =====================================================================
@@ -3766,7 +3764,7 @@ function stageInit20(){ $('#draw').insertAdjacentHTML('beforeend',`<div id="poll
 PH.votes={}; PH.score=0; PH.lsEnd=0; PH.lsRun=false;
 async function wakeLock(){ try{ if(navigator.wakeLock&&!PH.wl) PH.wl=await navigator.wakeLock.request('screen'); }catch(e){} }
 const __join20=PH.join.bind(PH); PH.join=function(){ wakeLock(); return __join20(); };
-PH.vote=function(v){ const st=this.st; if(!st||!st.poll||st.lock) return; this.votes[st.vk]=v; sendX({t:'vote',s:this.s,k:st.vk,v}); NET.pres({vote:{k:st.vk,v}}); this.vib(25); this.voteRender(); wakeLock(); };
+PH.vote=function(v){ return; const st=this.st; if(!st||!st.poll||st.lock) return; this.votes[st.vk]=v; sendX({t:'vote',s:this.s,k:st.vk,v}); NET.pres({vote:{k:st.vk,v}}); this.vib(25); this.voteRender(); wakeLock(); };
 PH.voteRender=function(){ const box=$('#vote20'), st=this.st||{}; if(!box) return; const show=st.poll&&(st.ph==='tap'||st.ph==='draw'); box.style.display=show?'block':'none'; if(!show) return;
   const my=this.votes[st.vk], tot=(st.py||0)+(st.pn||0), py=tot?Math.round(st.py/tot*100):0;
   box.querySelectorAll('button').forEach(b=>{ b.classList.toggle('sel',b.dataset.v===my); b.disabled=!!st.lock; });
@@ -6591,7 +6589,7 @@ const JP64={ cur:null, dep:new Map(), depAt:0, tah:{pi:-1,Y:0,N:0},
     if(i===0) this.tahSonuc(w); if(i===3) this.burada(); },
   burada(){ const w=this.cur&&this.cur.w; if(!w) return; const c=$('#jp-row .jc[data-i="3"] .bk'); if(c&&!c.querySelector('.hb')&&typeof L!=='undefined'&&L.here&&L.here.has(String(w.id))) c.insertAdjacentHTML('beforeend','<span class="hb">✓ BURADA</span>'); },
   /* dokunma turunda şehir payı */
-  tahGoster(pi){ const el=$('#jp-tah'); if(!el) return; const t=this.tah; let Y=t.pi===pi?t.Y:0, N=t.pi===pi?t.N:0, f='';
+  tahGoster(pi){ return; const el=$('#jp-tah'); if(!el) return; const t=this.tah; let Y=t.pi===pi?t.Y:0, N=t.pi===pi?t.N:0, f='';
     if(Y+N>0) f=`${Math.round(Y+N).toLocaleString('tr-TR')} dokunuş · telefonlardan`;
     else { try{ L.lit.forEach(ix=>{ const w=S.list[ix]; if(w) w.city==='N'?N++:Y++; }); }catch(e){} if(Y+N>0) f=`${(Y+N).toLocaleString('tr-TR')} telefon salonda`; }
     if(Y+N<=0){ el.classList.remove('on'); return; }

@@ -2315,6 +2315,10 @@ body.jp67k #chip22{display:none!important}
 /* v70 · ortak geri sayım başlığı koyu ışık şovunda okunur */
 #stage #ov-ls .k1{color:#fec6a2!important;text-shadow:0 2px 14px rgba(0,0,0,.7)}
 #stage #ov-ls.fin .k1{color:#62226c!important;text-shadow:none}
+/* v70 · kutuların üstü: etiket yok, hediye adı ve sıra (3/4) daha büyük */
+#jp64.np70 .jp-pill{display:none}
+#jp64.np70 .jp-t{margin-top:0}
+#jp64 .jp-t{font-size:44px}
 /* v70 · kapak başlığı tek satır: "Yeni Yıl Çekilişi" */
 #s-cover31 .c31-t{white-space:nowrap}
 #s-cover31 .c31-t em{display:inline;font-style:normal}
@@ -6558,7 +6562,7 @@ const JP64={ cur:null, dep:new Map(), depAt:0, tah:{pi:-1,Y:0,N:0},
         <span class="no">${i+1}</span><span class="lb">${a[0]}${i===3?' ★':''}</span>${i===3&&son?'<span class="ft">BÜYÜK FİNAL</span>':''}</div>
       <div class="bk">${this.yuz(i,w)}</div></div></div>`).join('');
     $('#jp-t').innerHTML=`${this.esc(p.name)} <em>· ${no}/${p.qty}</em>`;
-    $('#jp-k').textContent=son?'BÜYÜK FİNAL · TEK KAZANAN':'YENİ YIL HEDİYESİ YOLDA'; },
+    $('#jp-k').textContent=son?'BÜYÜK FİNAL · TEK KAZANAN':''; $('#jp64').classList.toggle('np70',!son); },
   yuz(i,w){ const e=this.esc.bind(this), c=w.city==='N'?'n':'y', dep=this.depAd(w.id);
     if(i===0) return `<div class="ak">ADIM 1 · ŞEHİR</div><div class="sh ${c}"><i></i>${e(this.sehir(w.city).toLocaleUpperCase('tr'))}</div><div class="al">Kazananın lokasyonu</div>`;
     if(i===1) return `<div class="ak">ADIM 2 · DEPARTMAN</div><div class="dp">${e((dep||'Akkim').toLocaleUpperCase('tr'))}</div><div class="al">Çalışma birimi</div>`;

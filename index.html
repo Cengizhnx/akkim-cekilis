@@ -2319,6 +2319,10 @@ body.jp67k #chip22{display:none!important}
 #jp64.np70 .jp-pill{display:none}
 #jp64.np70 .jp-t{margin-top:0}
 #jp64 .jp-t{font-size:44px}
+/* v70 · 4 kutunun içi tek yazı stili: şehir, departman, baş harfler ve kazanan adı aynı boy ve kalınlıkta */
+.jc .sh,.jc .dp,.jc .bh,.jc .kz{font:900 40px/1.1 Montserrat,sans-serif;letter-spacing:-.01em;word-break:normal;overflow-wrap:normal;padding:0 14px;max-width:100%;box-sizing:border-box}
+.jc .dp,.jc .kz{color:#1f1d21}
+.jc .bh{color:#62226c}
 /* v70 · kapak başlığı tek satır: "Yeni Yıl Çekilişi" */
 #s-cover31 .c31-t{white-space:nowrap}
 #s-cover31 .c31-t em{display:inline;font-style:normal}
@@ -6539,6 +6543,11 @@ CONFIG.storageKey='akkim-cekilis-v65';
      çarklar arka planda dönmeye devam eder, kartlar çarkların durduğu anlara bağlanır
    · sağ üstte "Bu hediye hangi şehre?" — dokunma turunda telefonlardan gelen şehir payı
    ===================================================================== */
+function kisa70(t){ t=String(t||'').trim(); if(t.length<=12) return t; const k=t.split(/\s+/); if(k.length<2) return t;
+  return k[0]+' '+k.slice(1).map(x=>x.length>4?x.slice(0,3)+'.':x).join(' '); }
+function sig70(r){ try{ const E=[...r.querySelectorAll('.sh,.dp,.bh,.kz')]; if(!E.length) return; let f=40;
+  const tasar=x=>x.scrollWidth>x.clientWidth+1||x.offsetHeight>f*1.1*2+4;
+  for(;f>22;f-=2){ E.forEach(x=>x.style.fontSize=f+'px'); if(!E.some(tasar)) break; } }catch(e){} }
 const JP64={ cur:null, dep:new Map(), depAt:0, tah:{pi:-1,Y:0,N:0},
   esc(t){ return String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); },
   sehir(c){ return c==='N'?'Nazilli':'Yalova'; },
@@ -6562,12 +6571,12 @@ const JP64={ cur:null, dep:new Map(), depAt:0, tah:{pi:-1,Y:0,N:0},
         <span class="no">${i+1}</span><span class="lb">${a[0]}${i===3?' ★':''}</span>${i===3&&son?'<span class="ft">BÜYÜK FİNAL</span>':''}</div>
       <div class="bk">${this.yuz(i,w)}</div></div></div>`).join('');
     $('#jp-t').innerHTML=`${this.esc(p.name)} <em>· ${no}/${p.qty}</em>`;
-    $('#jp-k').textContent=son?'BÜYÜK FİNAL · TEK KAZANAN':''; $('#jp64').classList.toggle('np70',!son); },
+    $('#jp-k').textContent=son?'BÜYÜK FİNAL · TEK KAZANAN':''; $('#jp64').classList.toggle('np70',!son); sig70(row); },
   yuz(i,w){ const e=this.esc.bind(this), c=w.city==='N'?'n':'y', dep=this.depAd(w.id);
-    if(i===0) return `<div class="ak">ADIM 1 · ŞEHİR</div><div class="sh ${c}"><i></i>${e(this.sehir(w.city).toLocaleUpperCase('tr'))}</div><div class="al">Kazananın lokasyonu</div>`;
-    if(i===1) return `<div class="ak">ADIM 2 · DEPARTMAN</div><div class="dp">${e((dep||'Akkim').toLocaleUpperCase('tr'))}</div><div class="al">Çalışma birimi</div>`;
+    if(i===0) return `<div class="ak">ADIM 1 · ŞEHİR</div><div class="sh ${c}">${e(this.sehir(w.city).toLocaleUpperCase('tr'))}</div><div class="al">Kazananın lokasyonu</div>`;
+    if(i===1) return `<div class="ak">ADIM 2 · DEPARTMAN</div><div class="dp">${e(kisa70(dep||'Akkim').toLocaleUpperCase('tr'))}</div><div class="al">Çalışma birimi</div>`;
     if(i===2) return `<div class="ak">ADIM 3 · BAŞ HARFLER</div><div class="bh">${e(this.bas(w.name))}</div><div class="al">Ad ve soyadın baş harfleri</div>`;
-    return `<div class="ak">ADIM 4 · KAZANAN</div><div class="tb">★ TEBRİKLER</div><div class="kz">${e(shortName(w.name))}</div><div class="kc ${c}">${e(this.sehir(w.city))}${dep?' · '+e(dep):''}</div><div class="kid">#${e(w.id)}</div>`; },
+    return `<div class="ak">ADIM 4 · KAZANAN</div><div class="tb">★ TEBRİKLER</div><div class="kz">${e(shortName(w.name))}</div><div class="kid">#${e(w.id)}</div>`; },
   /* kutu yalnızca döner; konfeti tek sefer, son kutuda */
   ac(i){ const c=$(`#jp-row .jc[data-i="${i}"]`); if(!c||c.classList.contains('open')) return; c.classList.add('open');
     /* büyük finalde kutlamayı hemen ardından gelen 'kazandı' ekranı yapar; kutu konfetisi yalnız diğer tek tek çekilişlerde */

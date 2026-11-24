@@ -1,4 +1,4 @@
-﻿# Akkim Yeni Yıl Çekilişi 2027 · Netlify
+# Akkim Yeni Yıl Çekilişi 2027 · Netlify
 # Derleme yok: klasör olduğu gibi yayınlanır. Yollar _redirects, başlıklar _headers dosyasında.
 [build]
   publish = "."

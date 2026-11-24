@@ -3712,13 +3712,13 @@ function bestGuesser(){ const el=$('#ak-best'); if(!el) return; const t=topGuess
 
 /* ---------------- sahne: ışık şovu (finalden hemen önce) ---------------- */
 const __fin20=finale;
-finale=async function(){ FX.ps=[]; await lightShow(); return __fin20(); };
+finale=async function(){ FX.ps=[]; const r=await __fin20(); await wait(6000); FX.ps=[]; await lightShow(); return r; };
 function lightShow(){ return new Promise(res=>{ const ov=$('#ov-ls'), n=$('#ls-n'), cap=$('#ls-c'); hideOverlays(); hideStageLayers();
   L.lsUntil=Date.now()+LS_T; pushX(); setTimeout(pushX,250); setTimeout(pushX,700); ov.className='ovl on'; SND.duck(true); SND.play('riser',.6);
   const t0=performance.now(); let lastS=-1, lastB=-1;
   const f=()=>{ const el=performance.now()-t0, left=LS_T-el;
     if(left<=0){ L.lsUntil=0; ov.className='ovl on fin'; n.textContent=CONFIG.year; cap.textContent='Yalova ve Nazilli birlikte'; SND.play('impact2',1); SND.play('fw-multi',.7); FX.ps=[]; FX.burst(60,.5,.45,1.3,true); pushX();
-      setTimeout(()=>{ ov.className='ovl'; res(); },2600); return; }
+      setTimeout(()=>{ res(); },2600); return; }
     if(el<LS_INTRO){ n.textContent='📱'; cap.innerHTML='Telefon ekranlarınızı <b class="gold">havaya kaldırın!</b>'; }
     else { const s=Math.ceil(left/1000); if(s!==lastS){ lastS=s; n.textContent=s; n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop'); SND.play(s<=3?'impact2':'tick',s<=3?.6:.55); cap.innerHTML=s>3?'Salonun ışığı sizsiniz · <span class="city-y">Yalova</span> ⟷ <span class="city-n">Nazilli</span>':'<b class="gold">Hep birlikte!</b>'; }
       const beat=Math.floor((el-LS_INTRO)/500); if(beat!==lastB){ lastB=beat; ov.classList.toggle('by',left>3000&&beat%2===0); ov.classList.toggle('bn',left>3000&&beat%2===1); ov.classList.toggle('bg',left<=3000); } }
